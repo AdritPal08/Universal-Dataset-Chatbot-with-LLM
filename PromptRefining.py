@@ -10,7 +10,8 @@ env_loaded = load_dotenv()
 api_key = os.getenv("GROQ_API_KEY")
 
 # Initialize the LLM with Groq API key
-llm_llama = ChatGroq(model_name="llama-3.1-70b-versatile", api_key=api_key)
+# llm_llama = ChatGroq(model_name="llama-3.1-70b-versatile", api_key=api_key)
+llm_llama = ChatGroq(model_name="llama-3.1-8b-instant", api_key=api_key)
 
 system_message = """
     You are a helpful AI assistant, trained to refine prompts. Your task is to refine the user given query to the well-structured prompts. Here are some instructions and guidelines that you need to follow when you generate prompts:

@@ -25,13 +25,22 @@ from file_io import save_to_excel
 env_loaded = load_dotenv()
 api_key = os.getenv("GROQ_API_KEY")
 api_key_google = os.getenv("GOOGLE_API_KEY")
-# os.environ["PANDASAI_API_KEY"] = os.getenv("PANDASAI_API_KEY")
+os.environ["PANDASAI_API_KEY"] = os.getenv("PANDASAI_API_KEY")
 
 llm_llama = ChatGroq(
     model_name="gemma2-9b-it", 
     api_key = api_key,
     temperature=0)
 
+# llm_llama = ChatGroq(
+#     model_name="llama-3.1-8b-instant", 
+#     api_key = api_key,
+#     temperature=0)
+
+# llm_llama = ChatGroq(
+#     model_name="llama-3.1-70b-versatile", 
+#     api_key = api_key,
+#     temperature=0)
         
 # Instantiate the vector store
 vector_store = ChromaDB()
@@ -75,7 +84,8 @@ Queries = ["""I need the unique Product Categories along with their month-wise a
 - Include an appropriate chart title and titles for both the X-axis and Y-axis.
 - Clearly label the X-axis and Y-axis values.
 - Adjust the chart's width and height for readability, ensuring all values are visible without overlap. 
-"""]
+"""
+]
 Responses = ["""      
 import pandas as pd
 
@@ -167,8 +177,8 @@ def chat_with_data(df,prompt,folder):
     head_df = df.sample(10) 
     connector = PandasConnector({"original_df": df}, field_descriptions=field_descriptions)
     sdf = SmartDataframe(connector, name="ArTraderAnalysis", description= Description,config={'llm': llm_llama})
-    # judge = JudgeAgent()
-    # security = AdvancedSecurityAgent()
+    judge = JudgeAgent()
+    security = AdvancedSecurityAgent()
     pandas_ai_agent = Agent(sdf,config={'llm': llm_llama,
                                     "save_logs": True,
                                     "save_charts" : True,
@@ -181,31 +191,14 @@ def chat_with_data(df,prompt,folder):
                                     "response_parser": StreamlitResponse,
                                     "custom_whitelisted_dependencies": ["plotly"]
                                     },
-                            # judge=judge,
-                            # security=security,
+                            judge=judge,
+                            security=security,
                             vectorstore=vector_store,
                             description="You are a data analysis agent. Your main goal is to help non-technical users to analyze data and give the correct answer of their questions."
                             )
     pandas_ai_agent.train(queries=Queries,codes= Responses)
-    if "Excel :" in prompt:
-        prompt = prompt.replace("Excel :", "").strip()
-        result = pandas_ai_agent.chat(prompt)
-        file_link = save_to_excel(result,folder)
-        return file_link
-    else:
-        result = pandas_ai_agent.chat(prompt)
-        return result
+    result = pandas_ai_agent.chat(prompt)
+    return result
     
 
 #---------------------------<><><><><><><><><><><><><><><><>---------------------------
-#----------------------------------------TESTING----------------------------------------
-uploaded_file = 'retail_sales_dataset.csv'
-dataset = load_data(uploaded_file)
-dataset["Date"] = pd.to_datetime(dataset["Date"], errors="coerce")
-query = "Excel : I need the unique Product Categories and their Month-wise and Gender-wise total Quantity and Total Amount as a table for year 2023 based on the Date column."
-# query = input("Enter your query: ")
-folder = "adrit"
-refine_query = refine_prompt(query)
-# print(refine_query)
-answer = chat_with_data(dataset,refine_query,folder)
-print(answer)
