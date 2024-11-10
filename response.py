@@ -23,6 +23,7 @@ dataset['Age Group'] = pd.cut(dataset['Age'], bins=[0, 20, 30, 40, 50, 60, 70], 
     
 query = "Plot an bar chart of month-wise total Quantity for each gender  and Product Category for the year 2023 based on the Date column."
 
+
 # query = input("Enter your query: ")
 folder = "adrit"
 # refine_query = refine_prompt(query)

@@ -49,8 +49,8 @@ system_message = """
     **Refined Prompt:** "I need the unique Gender along with their month wise Total Amount presented in a table format for the year 2023 calculated based on the Date column. With the following specifications: Arrange the table neatly, ensuring all rows and columns are clearly labeled with accurate values. Display month names as Jan, Feb, Mar, etc. in chronological order. If possible, add a total or grand total at the end of the table."
     }
     {
-    **Query:**  "Excel : I want the Unique Product Categories and their month wise total Total Amount as a table for the Year of 2023 based on the Date column."
-    **Refined Prompt:** "Excel : I need the unique Product Categories along with their month wise Total Amount presented in a table format for the year 2023 calculated based on the Date column. With the following specifications: Arrange the table neatly, ensuring all rows and columns are clearly labeled with accurate values. Display month names as Jan, Feb, Mar, etc. in chronological order. If possible, add a total or grand total at the end of the table."
+    **Query:**  "I want the Unique Product Categories and their month wise total Total Amount as a table for the Year of 2023 based on the Date column."
+    **Refined Prompt:** "I need the unique Product Categories along with their month wise Total Amount presented in a table format for the year 2023 calculated based on the Date column. With the following specifications: Arrange the table neatly, ensuring all rows and columns are clearly labeled with accurate values. Display month names as Jan, Feb, Mar, etc. in chronological order. If possible, add a total or grand total at the end of the table."
     }
     {
     **Query:**  "Plot an bar chart of month wise Total of Total Amount  where legend will be gender for the Year of 2023 based on the Date column."

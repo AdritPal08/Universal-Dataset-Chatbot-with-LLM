@@ -27,21 +27,20 @@ api_key = os.getenv("GROQ_API_KEY")
 api_key_google = os.getenv("GOOGLE_API_KEY")
 os.environ["PANDASAI_API_KEY"] = os.getenv("PANDASAI_API_KEY")
 
-llm_llama = ChatGroq(
-    model_name="gemma2-9b-it", 
-    api_key = api_key,
-    temperature=0)
+
+# llm_llama = ChatGroq(
+#     model_name="llama-3.1-70b-versatile",  # **1
+#     api_key = api_key)
+
+# llm_llama = ChatGroq(
+#     model_name="gemma2-9b-it", 
+#     api_key = api_key,
+#     temperature=0)
 
 # llm_llama = ChatGroq(
 #     model_name="llama-3.1-8b-instant", 
-#     api_key = api_key,
-#     temperature=0)
+#     api_key = api_key)
 
-# llm_llama = ChatGroq(
-#     model_name="llama-3.1-70b-versatile", 
-#     api_key = api_key,
-#     temperature=0)
-        
 # Instantiate the vector store
 vector_store = ChromaDB()
 #---------------------------<><><><><><><><><><><><><><><><>---------------------------
@@ -196,7 +195,7 @@ def chat_with_data(df,prompt,folder):
                             vectorstore=vector_store,
                             description="You are a data analysis agent. Your main goal is to help non-technical users to analyze data and give the correct answer of their questions."
                             )
-    pandas_ai_agent.train(queries=Queries,codes= Responses)
+    # pandas_ai_agent.train(queries=Queries,codes= Responses)
     result = pandas_ai_agent.chat(prompt)
     return result
     
